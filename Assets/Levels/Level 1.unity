@@ -2570,6 +2570,11 @@ PrefabInstance:
       propertyPath: joystick
       value: 
       objectReference: {fileID: 192274214}
+    - target: {fileID: 8368793785732923561, guid: 5b3228f0854a7b34196e9c3b5251c1aa,
+        type: 3}
+      propertyPath: movementSpeedModifier
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2612068770003203735, guid: 5b3228f0854a7b34196e9c3b5251c1aa,
         type: 3}
       propertyPath: m_LocalScale.x
