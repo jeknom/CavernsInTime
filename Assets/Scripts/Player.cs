@@ -55,12 +55,11 @@ namespace Game
 
         void OnRotateComplete()
         {
-            Debug.Log("Rotated player");
             this.playerSpriteRenderer.sprite = this.hourglassData.isRotated
                 ? this.youngSprite
                 : this.oldSprite;
-            Debug.Log("hourglass rotated " + this.hourglassData.isRotated);
-            //this.transform.rotation = this.originalRotation;
+
+            this.transform.rotation = this.originalRotation;
         }
     }
 }

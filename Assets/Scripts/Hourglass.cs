@@ -107,6 +107,7 @@ public class Hourglass : MonoBehaviour
         {
             if (!this.hourglassData.isTrickling)
             {
+                this.ResetTrickle();
                 Debug.Log("Starting");
                 this.StartTrickle();
             }
