@@ -25,7 +25,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2141430606695761516}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000029087, y: 0.00025749}
+  m_AnchoredPosition: {x: 0, y: 0.0002593994}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &692191746902666368
@@ -54,7 +54,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2141430606695761516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -63,8 +63,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 36
@@ -150,7 +148,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2914471384689910055}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
@@ -172,7 +170,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2914471384689910055}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -235,7 +233,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3760172967940560465}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -244,8 +242,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: de329a2a26a753e40953179365570064, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -255,6 +251,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!114 &8305334880392189664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,7 +265,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 0}
-  rotateDuration: 0
+  hourglassData: {fileID: 11400000, guid: d70de63360750d5489ac41e13319adf3, type: 2}
+  timerText: {fileID: 7152544985710458681}
+  hourglassImage: {fileID: 1524709923090367688}
+  sandTrickleImages:
+  - {fileID: 6722907727098112807, guid: b594e5ae26d95074e80aa34254884d71, type: 3}
+  - {fileID: -4014782053372343939, guid: b594e5ae26d95074e80aa34254884d71, type: 3}
+  - {fileID: 5834735202385212606, guid: b594e5ae26d95074e80aa34254884d71, type: 3}
+  - {fileID: -7740151948657977197, guid: b594e5ae26d95074e80aa34254884d71, type: 3}
+  - {fileID: -2116505690821369814, guid: b594e5ae26d95074e80aa34254884d71, type: 3}
+  - {fileID: -341992631549444282, guid: b594e5ae26d95074e80aa34254884d71, type: 3}
+  - {fileID: -3796062591561118403, guid: b594e5ae26d95074e80aa34254884d71, type: 3}
+  - {fileID: -2277055298384826668, guid: b594e5ae26d95074e80aa34254884d71, type: 3}
+  - {fileID: -6885805743371611593, guid: b594e5ae26d95074e80aa34254884d71, type: 3}
+  - {fileID: 7661298747540972024, guid: b594e5ae26d95074e80aa34254884d71, type: 3}
+  rotateDuration: 1
 --- !u!1 &8989855845205627621
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,7 +292,7 @@ GameObject:
   - component: {fileID: 6174407706629792562}
   - component: {fileID: 8245238488213485341}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -324,7 +335,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8989855845205627621}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -333,8 +344,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 3d491e8289a9f0e4d89a9ae01914add3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -344,6 +353,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1001 &2914471383737731568
 PrefabInstance:
   m_ObjectHideFlags: 0
