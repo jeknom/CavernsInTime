@@ -204,6 +204,17 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1680416302351464914, guid: 63dcb94c573806d4fbb3838647b7b7e1,
+        type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 3b3cc7c22612cb442ac770f7193909d1,
+        type: 2}
+    - target: {fileID: 1680416302351464914, guid: 63dcb94c573806d4fbb3838647b7b7e1,
+        type: 3}
+      propertyPath: hourglass
+      value: 
+      objectReference: {fileID: 22910893}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63dcb94c573806d4fbb3838647b7b7e1, type: 3}
 --- !u!1 &170076733
@@ -608,6 +619,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -782
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524709923090367688, guid: a08d7325ef5819a4e93b8df89dff7ee0,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a08d7325ef5819a4e93b8df89dff7ee0, type: 3}

@@ -27,7 +27,7 @@ public class Hourglass : MonoBehaviour
     readonly float rotateDuration = 1f;
     bool isTrickling = false;
 
-    void Start()
+    public void Init()
     {
         this.originalRotation = this.transform.rotation;
         this.currentTrickleTime = this.trickleTime;

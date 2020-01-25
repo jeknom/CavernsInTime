@@ -8,6 +8,7 @@ public class Level : MonoBehaviour
     void Start()
     {
         this.hourglass.trickleTime = this.data.levelTime;
+        this.hourglass.Init();
         this.hourglass.StartTrickle();
     }
 }
