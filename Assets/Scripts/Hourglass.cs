@@ -10,26 +10,62 @@ using DG.Tweening;
 public class Hourglass : MonoBehaviour
 {
     [Header("Setup")]
-    [SerializeField] HourglassData hourglassData;
     [SerializeField] Text timerText;
     [SerializeField] Image hourglassImage;
     [SerializeField] List<Sprite> sandTrickleImages;
+    [SerializeField] Button hourglassButton;
+
+    [HideInInspector] public bool isYoung = false;
+    [HideInInspector] public bool isRotating = false;
+    [HideInInspector] public float trickleTime = 30f;
+    [HideInInspector] public UnityEvent OnRotate;
 
     Quaternion originalRotation;
     WaitForSeconds reusableWaitForSeconds = new WaitForSeconds(1f);
     Option<IEnumerator> currentTrickleRoutine = new Option<IEnumerator>();
-    public UnityEvent OnRotate;
-    public float currentTrickle;
-    public bool isYoung = false;
-    public bool isTrickling = false;
-    public bool isRotating = false;
+    float currentTrickleTime;
+    readonly float rotateDuration = 1f;
+    bool isTrickling = false;
+
+    void Start()
+    {
+        this.originalRotation = this.transform.rotation;
+        this.currentTrickleTime = this.trickleTime;
+        this.hourglassButton.onClick.AddListener(() => this.Rotate());
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            this.Rotate();
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            if (!this.isTrickling)
+            {
+                this.ResetTrickle();
+                Debug.Log("Starting");
+                this.StartTrickle();
+            }
+            else
+            {
+                Debug.Log("Stopping");
+                this.StopTrickle();
+            }
+        }
+    }
+
+    void OnMouseDown()
+    {
+        Debug.Log("Hello!");
+        this.Rotate();
+    }
 
     public void StartTrickle()
     {
         if (!this.isTrickling)
         {
-            this.currentTrickle = this.hourglassData.trickleTime;
-
             this.currentTrickleRoutine =
                 new Option<IEnumerator>(TrickleRoutine());
 
@@ -75,7 +111,7 @@ public class Hourglass : MonoBehaviour
         this.isTrickling = false;
         this.isYoung = false;
         this.isRotating = false;
-        this.currentTrickle = this.hourglassData.trickleTime;
+        this.currentTrickleTime = this.trickleTime;
     }
 
     public void Rotate()
@@ -87,7 +123,7 @@ public class Hourglass : MonoBehaviour
             var tween = this.transform
                 .DORotate(
                     endValue,
-                    this.hourglassData.rotateDuration,
+                    this.rotateDuration,
                     RotateMode.FastBeyond360)
                 .OnStart(() => this.OnRotateStart())
                 .SetRelative()
@@ -107,8 +143,7 @@ public class Hourglass : MonoBehaviour
 
     void OnRotateComplete()
     {
-        this.currentTrickle =
-            this.hourglassData.trickleTime - this.currentTrickle;
+        this.currentTrickleTime = this.trickleTime - this.currentTrickleTime;
         this.isRotating = false;
         this.isYoung = !this.isYoung;
         this.transform.rotation = this.originalRotation;
@@ -119,39 +154,10 @@ public class Hourglass : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        this.originalRotation = this.transform.rotation;
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            this.Rotate();
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            if (!this.isTrickling)
-            {
-                this.ResetTrickle();
-                Debug.Log("Starting");
-                this.StartTrickle();
-            }
-            else
-            {
-                Debug.Log("Stopping");
-                this.StopTrickle();
-            }
-        }
-    }
-
     void SetCurrentHourglassImage()
     {
         // Calculating the image index from the percentage of time passed.
-        var percentile = Math.Round(
-                this.currentTrickle /
-                this.hourglassData.trickleTime, 1);
+        var percentile = Math.Round(this.currentTrickleTime / this.trickleTime, 1);
         var index = Math.Floor(percentile * 10);
         if (index <= 0)
         {
@@ -173,21 +179,21 @@ public class Hourglass : MonoBehaviour
         {
             if (this.isYoung)
             {
-                this.currentTrickle -= 2;
+                this.currentTrickleTime -= 2;
             }
             else
             {
-                this.currentTrickle--;
+                this.currentTrickleTime--;
             }
 
             this.SetCurrentHourglassImage();
-            this.timerText.text = this.currentTrickle.ToString();
+            this.timerText.text = this.currentTrickleTime.ToString();
 
             yield return this.reusableWaitForSeconds;
         }
         while (
-            this.currentTrickle > 0 &&
-            this.currentTrickle < this.hourglassData.trickleTime);
+            this.currentTrickleTime > 0 &&
+            this.currentTrickleTime < this.trickleTime);
 
         this.StopTrickle();
     }

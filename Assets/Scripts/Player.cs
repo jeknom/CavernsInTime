@@ -48,12 +48,14 @@ namespace Game
 
         void OnRotate()
         {
-            this.transform
+            var tween = this.transform
                 .DORotate(
                     new Vector3(0f, 0f, -360f),
                     this.rotateDuration,
                     RotateMode.FastBeyond360)
                 .OnComplete(() => this.OnRotateComplete());
+
+            DOTween.Play(tween);
         }
 
         void OnRotateComplete()
