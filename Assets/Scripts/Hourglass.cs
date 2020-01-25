@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using Utils;
 using DG.Tweening;
 
 public class Hourglass : MonoBehaviour
 {
     [Header("Setup")]
-    [SerializeField] LevelData data;
     [SerializeField] HourglassData hourglassData;
     [SerializeField] Text timerText;
     [SerializeField] Image hourglassImage;
@@ -16,15 +17,27 @@ public class Hourglass : MonoBehaviour
 
     Quaternion originalRotation;
     WaitForSeconds reusableWaitForSeconds = new WaitForSeconds(1f);
-    IEnumerator currentTrickleRoutine;
+    Option<IEnumerator> currentTrickleRoutine = new Option<IEnumerator>();
+    public UnityEvent OnRotate;
+    public float currentTrickle;
+    public bool isYoung = false;
+    public bool isTrickling = false;
+    public bool isRotating = false;
 
     public void StartTrickle()
     {
-        if (!this.hourglassData.isTrickling)
+        if (!this.isTrickling)
         {
-            this.currentTrickleRoutine = TrickleRoutine();
-            this.StartCoroutine(this.currentTrickleRoutine);
-            this.hourglassData.isTrickling = true;
+            this.currentTrickle = this.hourglassData.trickleTime;
+
+            this.currentTrickleRoutine =
+                new Option<IEnumerator>(TrickleRoutine());
+
+            this.currentTrickleRoutine.MatchSome(routine =>
+            {
+                this.StartCoroutine(routine);
+                this.isTrickling = true;
+            });
         }
     }
 
@@ -32,35 +45,46 @@ public class Hourglass : MonoBehaviour
     {
         this.transform.DOKill();
 
-        if (this.hourglassData.isTrickling)
+        if (this.isTrickling)
         {
-            this.StopCoroutine(this.currentTrickleRoutine);
+            this.currentTrickleRoutine.MatchSome(routine =>
+            {
+                this.StopCoroutine(routine);
+            });
+
             this.ResetTrickle();
-            this.hourglassData.isTrickling = false;
+            this.isTrickling = false;
         }
     }
 
     public void PauseTrickle()
     {
-        if (this.hourglassData.isTrickling)
+        if (this.isTrickling)
         {
-            this.StopCoroutine(this.currentTrickleRoutine);
-            this.hourglassData.isTrickling = false;
+            this.currentTrickleRoutine.MatchSome(routine =>
+            {
+                this.StopCoroutine(routine);
+            });
+
+            this.isTrickling = false;
         }
     }
 
     public void ResetTrickle()
     {
-        this.hourglassData.currentTrickle = this.hourglassData.trickleTime;
+        this.isTrickling = false;
+        this.isYoung = false;
+        this.isRotating = false;
+        this.currentTrickle = this.hourglassData.trickleTime;
     }
 
     public void Rotate()
     {
-        if (!this.hourglassData.isRotating)
+        if (!this.isRotating)
         {
-            this.hourglassData.isRotating = true;
+            this.isRotating = true;
             var endValue = new Vector3(0f, 0f, 180f);
-            this.transform
+            var tween = this.transform
                 .DORotate(
                     endValue,
                     this.hourglassData.rotateDuration,
@@ -69,32 +93,35 @@ public class Hourglass : MonoBehaviour
                 .SetRelative()
                 .OnComplete(() => this.OnRotateComplete());
 
-            this.transform.DOPlay();
+            DOTween.Play(tween);
         }
     }
 
     void OnRotateStart()
     {
-        this.hourglassData.isRotating = true;
-        this.hourglassData.OnRotate.Invoke();
+        this.isRotating = true;
+        this.OnRotate.Invoke();
 
         this.PauseTrickle();
     }
 
     void OnRotateComplete()
     {
-        this.hourglassData.currentTrickle =
-            this.hourglassData.trickleTime - this.hourglassData.currentTrickle;
-        this.hourglassData.isRotating = false;
-        this.hourglassData.isRotated = !this.hourglassData.isRotated;
+        this.currentTrickle =
+            this.hourglassData.trickleTime - this.currentTrickle;
+        this.isRotating = false;
+        this.isYoung = !this.isYoung;
         this.transform.rotation = this.originalRotation;
 
-        this.StartTrickle();
+        if (!this.isTrickling)
+        {
+            this.StartTrickle();
+        }
     }
 
     void Start()
     {
-        this.originalRotation = this.transform.rotation;    
+        this.originalRotation = this.transform.rotation;
     }
 
     void Update()
@@ -105,7 +132,7 @@ public class Hourglass : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            if (!this.hourglassData.isTrickling)
+            if (!this.isTrickling)
             {
                 this.ResetTrickle();
                 Debug.Log("Starting");
@@ -123,7 +150,7 @@ public class Hourglass : MonoBehaviour
     {
         // Calculating the image index from the percentage of time passed.
         var percentile = Math.Round(
-                this.hourglassData.currentTrickle /
+                this.currentTrickle /
                 this.hourglassData.trickleTime, 1);
         var index = Math.Floor(percentile * 10);
         if (index <= 0)
@@ -144,15 +171,23 @@ public class Hourglass : MonoBehaviour
     {
         do
         {
-            this.hourglassData.currentTrickle--;
+            if (this.isYoung)
+            {
+                this.currentTrickle -= 2;
+            }
+            else
+            {
+                this.currentTrickle--;
+            }
+
             this.SetCurrentHourglassImage();
-            this.timerText.text = this.hourglassData.currentTrickle.ToString();
+            this.timerText.text = this.currentTrickle.ToString();
 
             yield return this.reusableWaitForSeconds;
         }
         while (
-            this.hourglassData.currentTrickle > 0 &&
-            this.hourglassData.currentTrickle < this.hourglassData.trickleTime);
+            this.currentTrickle > 0 &&
+            this.currentTrickle < this.hourglassData.trickleTime);
 
         this.StopTrickle();
     }

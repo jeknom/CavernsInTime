@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209ee06863ff8bc46bcf3eaf3717126c, type: 3}
   m_Name: Hourglass Data
   m_EditorClassIdentifier: 
-  isTrickling: 0
+  isTrickling: 1
   isRotating: 0
   isRotated: 0
-  currentTrickle: 30
+  currentTrickle: 16
   trickleTime: 30
   rotateDuration: 1
   OnRotate:

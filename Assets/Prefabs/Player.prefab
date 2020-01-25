@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: da5398a6bbb89474ba70c7ce94d956f2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e863747e3639aaf45979dafa788e62b1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -100,7 +100,8 @@ MonoBehaviour:
   playerSpriteRenderer: {fileID: 8368793785732923573}
   youngSprite: {fileID: 21300000, guid: da5398a6bbb89474ba70c7ce94d956f2, type: 3}
   oldSprite: {fileID: 21300000, guid: e863747e3639aaf45979dafa788e62b1, type: 3}
-  movementSpeedModifier: 0.1
+  oldSpeed: 0.1
+  youngSpeed: 0.2
 --- !u!50 &8368793785732923560
 Rigidbody2D:
   serializedVersion: 4
